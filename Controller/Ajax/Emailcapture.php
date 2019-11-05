@@ -2,8 +2,8 @@
 
 namespace Dotdigitalgroup\Email\Controller\Ajax;
 
-use Dotdigitalgroup\Email\Model\Chat\Config;
-use Dotdigitalgroup\Email\Model\Chat\Profile\UpdateChatProfile;
+//use Dotdigitalgroup\Email\Model\Chat\Config;
+//use Dotdigitalgroup\Email\Model\Chat\Profile\UpdateChatProfile;
 use Magento\Framework\Stdlib\Cookie\CookieReaderInterface;
 
 class Emailcapture extends \Magento\Framework\App\Action\Action
@@ -46,13 +46,13 @@ class Emailcapture extends \Magento\Framework\App\Action\Action
         \Magento\Quote\Model\ResourceModel\Quote $quoteResource,
         \Magento\Checkout\Model\Session $session,
         \Magento\Framework\App\Action\Context $context,
-        UpdateChatProfile $chatProfile,
+//        UpdateChatProfile $chatProfile,
         CookieReaderInterface $cookieReader
     ) {
         $this->helper = $data;
         $this->quoteResource = $quoteResource;
         $this->checkoutSession = $session;
-        $this->chatProfile = $chatProfile;
+//        $this->chatProfile = $chatProfile;
         $this->cookieReader = $cookieReader;
         parent::__construct($context);
     }
@@ -80,10 +80,10 @@ class Emailcapture extends \Magento\Framework\App\Action\Action
                 }
             }
 
-            // if a chat profile ID is present, update chat profile data
-            if ($chatProfileId = $this->cookieReader->getCookie(Config::COOKIE_CHAT_PROFILE, null)) {
-                $this->chatProfile->update($chatProfileId, $email);
-            }
+//            // if a chat profile ID is present, update chat profile data
+//            if ($chatProfileId = $this->cookieReader->getCookie(Config::COOKIE_CHAT_PROFILE, null)) {
+//                $this->chatProfile->update($chatProfileId, $email);
+//            }
         }
     }
 }

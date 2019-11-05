@@ -2,16 +2,16 @@
 
 namespace Dotdigitalgroup\Email\Controller\Email;
 
-use Dotdigitalgroup\Email\Helper\Config as EmailConfig;
+use Dotdigitalgroup\Chat\Model\Config;
 use Dotdigitalgroup\Email\Helper\Data;
-use Dotdigitalgroup\Email\Model\Trial\TrialSetupFactory;
-use Magento\Framework\App\Action\Context;
-use Magento\Framework\Stdlib\DateTime\Timezone;
-use Dotdigitalgroup\Email\Model\Chat\Config;
+//use Dotdigitalgroup\Email\Model\Chat\EmailFlagManager;
 use Dotdigitalgroup\Email\Model\Trial\TrialSetup;
+use Dotdigitalgroup\Email\Model\Trial\TrialSetupFactory;
+//use Dotdigitalgroup\Email\Model\Chat\Config;
+use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
-use Dotdigitalgroup\Email\Model\Chat\EmailFlagManager;
+use Magento\Framework\Stdlib\DateTime\Timezone;
 
 class Accountcallback extends \Magento\Framework\App\Action\Action
 {
@@ -36,9 +36,9 @@ class Accountcallback extends \Magento\Framework\App\Action\Action
     private $helper;
 
     /**
-     * @var EmailFlagManager
+     * @var \Magento\Framework\Module\Manager
      */
-    private $flagManager;
+    private $moduleManager;
 
     /**
      * AccountCallBack constructor
@@ -52,17 +52,19 @@ class Accountcallback extends \Magento\Framework\App\Action\Action
     public function __construct(
         Context $context,
         Timezone $timezone,
-        Config $config,
+//        Config $config,
         TrialSetupFactory $trialSetupFactory,
         Data $helper,
-        EmailFlagManager $flagManager
+        \Magento\Framework\Module\Manager $moduleManager
+//        EmailFlagManager $flagManager
     ) {
+
         $this->timezone = $timezone;
-        $this->config = $config;
+//        $this->config = $config;
         $this->trialSetup = $trialSetupFactory->create();
         $this->helper = $helper;
-        $this->flagManager = $flagManager;
-
+//        $this->flagManager = $flagManager;
+        $this->moduleManager = $moduleManager;
         parent::__construct($context);
     }
 
@@ -74,6 +76,8 @@ class Accountcallback extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $params = $this->getRequest()->getParams();
+        $website = $this->helper->getWebsiteForSelectedScopeInAdmin();
+
         $this->helper->debug('Account callback request', $params);
 
         if (!isset($params['code']) || !$this->trialSetup->isCodeValid($params['code'])) {
@@ -81,14 +85,14 @@ class Accountcallback extends \Magento\Framework\App\Action\Action
         }
 
         // save credentials and reinit cache
-        $this->config->saveApiCredentials($params['apiusername'], $params['apipassword'], $params['apiendpoint'] ?? null);
+        $this->helper->saveApiCredentials($params['apiusername'], $params['apipassword'], $params['apiendpoint'] ?? null, $website);
 
-        if ($chatAccountCreated = (!empty($params['apispaceid']) && !empty($params['token']))) {
-            $this->config->saveChatApiSpaceIdAndToken($params['apispaceid'], $params['token']);
+        if ($chatAccountCreated = (!empty($params['apispaceid']) && !empty($params['token'])) && $this->moduleManager->isEnabled('Dotdigitalgroup_Chat')) {
+            $this->helper->saveChatApiSpaceIdAndToken($params['apispaceid'], $params['token'], $website);
         }
 
         // enable EC in Magento
-        $this->config->enableEngagementCloud()
+        $this->helper->enableEngagementCloud($website)
             ->reinitialiseConfig();
 
         // set up EC account
