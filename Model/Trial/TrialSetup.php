@@ -6,9 +6,9 @@ use Dotdigitalgroup\Email\Helper\Config;
 use Dotdigitalgroup\Email\Helper\Config as EmailConfig;
 use Dotdigitalgroup\Email\Model\SetsTimezoneAndCultureTrait as SetsTimezoneAndCulture;
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\Information;
-use Magento\Framework\Encryption\EncryptorInterface;
 
 /**
  * Handle the trial account creation.
@@ -405,7 +405,7 @@ class TrialSetup
             '%s?%s',
             $trialSignupBaseUrl,
             http_build_query([
-                'callback' => $baseUrl . \Dotdigitalgroup\Email\Model\Chat\Config::MAGENTO_ROUTE,
+                'callback' => $baseUrl . \Dotdigitalgroup\Email\Helper\Config::MAGENTO_ROUTE,
                 'company' => $this->helper->getWebsiteConfig(Information::XML_PATH_STORE_INFO_NAME),
                 'culture' => $this->getCultureId(),
                 'timezone' => $this->getTimeZoneId(),
@@ -424,9 +424,10 @@ class TrialSetup
     public function getLocalCallbackUrl()
     {
         $store = $this->helper->storeManager->getStore();
-        return sprintf('%s%s?isAjax=true',
+        return sprintf(
+            '%s%s?isAjax=true',
             $store->getBaseUrl(UrlInterface::URL_TYPE_WEB, $store->isCurrentlySecure()),
-            \Dotdigitalgroup\Email\Model\Chat\Config::MAGENTO_ROUTE
+            \Dotdigitalgroup\Email\Helper\Config::MAGENTO_ROUTE
         );
     }
 

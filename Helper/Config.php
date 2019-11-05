@@ -293,6 +293,9 @@ class Config extends \Magento\Framework\App\Helper\AbstractHelper
     const XML_PATH_CONNECTOR_TRIAL_URL_OVERRIDE = 'connector/microsite/url';
     const INTERNAL_SUB_DOMAIN = 'internal';
 
+    const MAGENTO_ROUTE = 'connector/email/accountcallback';
+    const MAGENTO_PROFILE_CALLBACK_ROUTE = 'connector/chat/profile?isAjax=true';
+    
     /**
      * @var \Magento\Framework\Stdlib\StringUtils
      */
