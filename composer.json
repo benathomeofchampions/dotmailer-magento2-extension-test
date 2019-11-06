@@ -42,7 +42,7 @@
     "magento/module-bundle": "100.*",
     "magento/module-grouped-product": "100.*",
     "magento/module-url-rewrite": ">=100 <102",
-    "dotdigital/engagement-cloud-chat": "dev-develop as 1.0.0"
+    "dotdigital/engagement-cloud-chat": "dev-develop"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",
