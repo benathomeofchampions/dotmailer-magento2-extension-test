@@ -12,6 +12,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/magento/marketplace-eqp"
+    },
+    {
+      "type": "vcs",
+      "url": "https://dev.azure.com/dotdigital/ec/_git/ec-cpaas-magento2-extension"
     }
   ],
   "require": {
@@ -45,7 +49,8 @@
     "magento/module-configurable-product": "100.*",
     "magento/module-bundle": "100.*",
     "magento/module-grouped-product": "100.*",
-    "magento/module-url-rewrite": ">=100 <102"
+    "magento/module-url-rewrite": ">=100 <102",
+    "dotdigital/engagement-cloud-chat": "dev-develop"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",
