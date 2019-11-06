@@ -6,14 +6,6 @@
   "license": "MIT",
   "repositories": [
     {
-      "type": "composer",
-      "url": "https://repo.magento.com/"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/magento/marketplace-eqp"
-    },
-    {
       "type": "vcs",
       "url": "https://github.com/benathomeofchampions/dotmailer-magento2-chat"
     }
@@ -50,7 +42,7 @@
     "magento/module-bundle": "100.*",
     "magento/module-grouped-product": "100.*",
     "magento/module-url-rewrite": ">=100 <102",
-    "dotdigital/engagement-cloud-chat": "dev-develop"
+    "dotdigital/engagement-cloud-chat": "dev-develop as 0.1.1"
   },
   "require-dev": {
     "phpmd/phpmd": "@stable",
