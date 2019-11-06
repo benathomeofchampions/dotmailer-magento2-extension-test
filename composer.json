@@ -15,7 +15,7 @@
     },
     {
       "type": "vcs",
-      "url": "https://dev.azure.com/dotdigital/ec/_git/ec-cpaas-magento2-extension"
+      "url": "https://github.com/benathomeofchampions/dotmailer-magento2-chat"
     }
   ],
   "require": {
